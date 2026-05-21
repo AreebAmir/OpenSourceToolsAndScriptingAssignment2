@@ -50,3 +50,57 @@ Run the script:
 ```bash
 ./clean trending_videos_unclean.csv
 ```
+
+# Question 2
+
+## Overview
+
+This task required creating a Bash script called `analyse` that reads `trending_videos_clean.csv` and performs statistical analysis on the dataset.
+
+The script is executed using:
+
+```bash
+./analyse trending_videos_clean.csv
+```
+
+## Analysis Performed
+
+The script calculates and displays:
+
+- The most frequent `video_id`
+- The mean number of views
+- The `video_id` with the maximum dislikes
+- The video with the highest engagement rate
+- The video with the least net sentiment rate
+
+## Formulas Used
+
+### Engagement Rate
+
+```text
+(likes + dislikes) / views
+```
+
+### Net Sentiment Rate
+
+```text
+(likes - dislikes) / views
+```
+
+## Tie Handling
+
+If multiple videos share the same result for a calculation, the script prints all matching videos in a clear format.
+
+## Running the Script
+
+Give execute permission:
+
+```bash
+chmod +x analyse
+```
+
+Run the script:
+
+```bash
+./analyse trending_videos_clean.csv
+```

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+input="$1"
+
+awk -F',' '
+NR == 1 { next }
+
+{
+    video_id = $1
+    publish_date = $2
+    views = $3 + 0
+    likes = $4 + 0
+    dislikes = $5 + 0
+
+    count[video_id]++
+
+    total_views += views
+    rows++
+
+    if (count[video_id] > max_count) {
+        max_count = count[video_id]
+    }
+
+    if (dislikes > max_dislikes) {
+        max_dislikes = dislikes
+        max_dislikes_ids = video_id
+    } else if (dislikes == max_dislikes) {
+        max_dislikes_ids = max_dislikes_ids ", " video_id
+    }
+
+    engagement = (likes + dislikes) / views
+    if (engagement > max_engagement) {
+        max_engagement = engagement
+        max_engagement_data = "ID: " video_id ", dated: " publish_date
+    } else if (engagement == max_engagement) {
+        max_engagement_data = max_engagement_data "\nHighest engagement rate video, ID: " video_id ", dated: " publish_date
+    }
+
+    sentiment = (likes - dislikes) / views
+    if (NR == 2 || sentiment < min_sentiment) {
+        min_sentiment = sentiment
+        min_sentiment_data = "ID: " video_id ", dated: " publish_date
+    } else if (sentiment == min_sentiment) {
+        min_sentiment_data = min_sentiment_data "\nLeast sentiment rate video, ID: " video_id ", dated: " publish_date
+    }
+}
+
+END {
+    for (id in count) {
+        if (count[id] == max_count) {
+            if (frequent_ids == "")
+                frequent_ids = id
+            else
+                frequent_ids = frequent_ids ", " id
+        }
+    }
+
+    printf "Most frequent video, ID: %s\n", frequent_ids
+    printf "Mean number of views: %.2f\n", total_views / rows
+    printf "Max dislikes video, ID: %s\n", max_dislikes_ids
+    printf "Highest engagement rate video, %s\n", max_engagement_data
+    printf "Least sentiment rate video, %s\n", min_sentiment_data
+}
+' "$input"
