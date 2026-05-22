@@ -1,5 +1,9 @@
 # Open Source Tools And Scripting Assignment #2
 
+Data for this assignment has been downloaded from [Kaggle](https://www.kaggle.com/). The downloaded data, on [Trending YouTube Video Statistics and
+Comments](https://www.kaggle.com/datasets/datasnaek/youtube), includes data gathered from videos on YouTube that are contained
+within the trending category each day, from 2008 to 2018.
+
 # Question 1
 
 ## Overview
